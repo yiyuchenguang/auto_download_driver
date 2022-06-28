@@ -23,7 +23,7 @@ class auto_download_chromedrive(object):
     def get_chromedriver_urls(self):
         try:
             r = requests.Session()
-            response = r.get(self.chromedrive_url, headers=self.headers)
+            response = r.get(self.chromedrive_url, headers=self.headers,verify=False)
             print(response.status_code, response.encoding)
             html = etree.HTML(response.text, etree.HTMLParser())  # 解析HTML文本内容
             version_href = html.xpath(".//strong//..//@href")
@@ -37,7 +37,7 @@ class auto_download_chromedrive(object):
     def download_chromadrive(self, url):
         try:
             r = requests.Session()
-            response = r.get(url, headers=self.headers)
+            response = r.get(url, headers=self.headers,verify=False)
             if response.status_code == 200:
                 with open("chromedriver_win32.zip", "wb") as f:
                     f.write(response.content)
